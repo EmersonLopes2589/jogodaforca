@@ -13,6 +13,8 @@ import random
 import math
 import tkinter as tk
 
+from words import PALAVRAS, sortear_palavra
+
 
 # Cores
 COR_FUNDO = "#1e293b"
@@ -25,38 +27,6 @@ COR_AMARELO = "#eab308"
 COR_CINZA = "#64748b"
 COR_BRANCO = "#ffffff"
 COR_OURO = "#facc15"
-
-
-# ============================================================================
-# BASE DE PALAVRAS (com dicas)
-# ============================================================================
-PALAVRAS = [
-    ("banana", "Fruta amarela rica em potassio"),
-    ("abacaxi", "Fruta tropical com coroa"),
-    ("morango", "Fruta vermelha pequena"),
-    ("laranja", "Fruta cor de ouro"),
-    ("computador", "Maquina eletronica de processar dados"),
-    ("teclado", "Tem teclas A, B, C..."),
-    ("monitor", "Tela do computador"),
-    ("elefante", "Maior animal terrestre"),
-    ("girafa", "Animal mais alto do mundo"),
-    ("cachorro", "Melhor amigo do homem"),
-    ("papagaio", "Ave que repete o que voce fala"),
-    ("brasil", "Pais do futebol"),
-    ("argentina", "Pais dos hermanos"),
-    ("futebol", "Esporte mais popular do Brasil"),
-    ("basquete", "Esporte da bola laranja"),
-    ("natacao", "Esporte praticado na agua"),
-    ("xadrez", "Jogo de estrategia com 64 casas"),
-    ("pizza", "Comida italiana redonda"),
-    ("chocolate", "Doce feito de cacau"),
-    ("violao", "Instrumento de 6 cordas"),
-]
-
-
-def sortear_palavra():
-    """Sorteia uma palavra e sua dica."""
-    return random.choice(PALAVRAS)
 
 
 # ============================================================================
@@ -482,17 +452,17 @@ class JogoForcaGUI:
      d$L  4.         $$$$$$$$$$$$$$$
      $$$$b ^ceeeee.  $$$$$$$$$$$$$$$$
      $$$$P d$$$$F $ $$$$$$$$$$$$$$$$$
-      3$$$F "$$$$b   $   $$$$$$P**$$.
+      3$$$F "$"$$$b   $   $$$$$$P**$$.
       $$P"  ^$$$$    \\  d$$$$    \\  3
        \\        4    \\  d$$$      4 $
-        \\              \\ d$$$$        \\
+        \\              \\ d$$$$        \
          -._.           \\  $$$$e       $
            \\           \\  $$$$F  ..  4
          4 $$$b          \\  $$P  d$$$ 4
              ^$$$$e       \\ d$P  .$$$P
                ^$$$$$c  ..  $$  .$$$$$
                   ^$$$$$$$$  d$$$$$
-                     "$$$$$$$$$$P
+                     "$"$$$$$$$$$P
                         "$$P"
         """
         tk.Label(derrota, text=skull, font=("Courier", 8),
