@@ -1,0 +1,30 @@
+# words.txt — formato: categoria:palavra:dica
+# Linhas em branco e linhas começando com # são ignoradas.
+
+frutas:banana:Fruta amarela rica em potassio
+frutas:abacaxi:Fruta tropical com coroa
+frutas:morango:Fruta vermelha pequena
+frutas:laranja:Fruta cor de ouro
+
+tecnologia:computador:Maquina eletronica de processar dados
+tecnologia:teclado:Tem teclas A, B, C...
+tecnologia:monitor:Tela do computador
+
+animais:elefante:Maior animal terrestre
+animais:girafa:Animal mais alto do mundo
+animais:cachorro:Melhor amigo do homem
+animais:papagaio:Ave que repete o que voce fala
+
+esportes:futebol:Esporte mais popular do Brasil
+esportes:basquete:Esporte da bola laranja
+esportes:natacao:Esporte praticado na agua
+
+comida:pizza:Comida italiana redonda
+comida:chocolate:Doce feito de cacau
+
+musica:violao:Instrumento de 6 cordas
+
+jogos:xadrez:Jogo de estrategia com 64 casas
+
+paises:brasil:Pais do futebol
+paises:argentina:Pais dos hermanos
