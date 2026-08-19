@@ -1,81 +1,125 @@
 # Jogo da Forca
 
-Jogo da Forca simples para adivinhar palavras letra a letra. Este repositório contém uma implementação do jogo (console/web) — adapte as instruções abaixo conforme a linguagem/estrutura do projeto.
+Implementação em Python (GUI com Tkinter) do clássico jogo da forca. Este repositório contém o arquivo principal `Jogo_da_Forca.py` que abre uma interface gráfica completa para jogar.
 
 ## Sobre
 
-O Jogo da Forca permite que um jogador tente adivinhar uma palavra secreta sugerindo letras. O objetivo é descobrir a palavra antes que as tentativas se esgotem.
-
-## Como jogar
-
-- O jogo seleciona (ou você fornece) uma palavra secreta.
-- A cada rodada, o jogador tenta uma letra.
-- Se a letra estiver na palavra, ela é revelada nas posições corretas.
-- Se não estiver, o jogador perde uma vida/uma tentativa.
-- O jogo termina quando o jogador adivinha toda a palavra (vitória) ou quando as tentativas acabam (derrota).
+O jogo seleciona uma palavra secreta (com dica) e o jogador tenta adivinhar letra a letra. A interface usa Tkinter e mostra a forca desenhada, botões com as letras, contagem de erros e telas de vitória/derrota.
 
 ## Requisitos
 
-- Git
-- Interpretador/ambiente conforme a implementação (ex.: Python 3.x, Node.js, navegador web).
+- Python 3.8+ (testado com 3.8/3.10/3.11)
+- Tkinter (vem com a maioria das instalações do Python, em distribuições Linux pode ser necessário instalar o pacote do sistema `python3-tk`)
+- Git (opcional, para clonar o repositório)
+
+Observação: não há dependências externas em pip para esta versão — tudo roda com a biblioteca padrão.
 
 ## Instalação
 
-1. Clone este repositório:
+1. Clone o repositório:
 
    git clone https://github.com/EmersonLopes2589/jogodaforca.git
    cd jogodaforca
 
-2. Siga o passo adequado à implementação do jogo neste repositório:
+2. (Opcional) Crie um ambiente virtual:
 
-- Para versão em Python (exemplo):
+   python3 -m venv env
+   source env/bin/activate    # macOS / Linux
+   .\env\Scripts\activate   # Windows PowerShell
 
-  python3 -m venv env
-  source env/bin/activate    # macOS / Linux
-  .\env\Scripts\activate   # Windows PowerShell
-  pip install -r requirements.txt
-  python main.py
+3. No Linux (se necessário), instale o Tkinter do sistema:
 
-- Para versão web (HTML/CSS/JS):
+   # Debian / Ubuntu
+   sudo apt update && sudo apt install python3-tk
 
-  Abra o arquivo `index.html` no seu navegador ou sirva com um servidor estático:
+4. Execute o jogo:
 
-  npx http-server .
+   python3 Jogo_da_Forca.py
 
-- Para versão em Node.js (exemplo):
+No Windows normalmente basta executar `python Jogo_da_Forca.py` em um terminal.
 
-  npm install
-  npm start
+## Como jogar
 
-Observação: substitua os comandos acima pelos comandos específicos do projeto, caso existam.
+- A janela principal mostra a forca, dica e os botões com as letras (A–Z).
+- Clique nas letras para chutar — letras corretas aparecem na palavra; letras incorretas aumentam o contador de erros.
+- Você tem 6 tentativas por padrão (variável `max_erros` no código).
+- Ao vencer, surge uma janela de vitória com animação; ao perder, surge a janela de derrota mostrando a palavra.
 
-## Estrutura sugerida do repositório
+## Palavras e dicas (words.py)
 
-- src/ ou jogo/ - código-fonte
-- assets/ - imagens e recursos
-- data/ - listas de palavras
-- README.md - este arquivo
-- LICENSE - licença do projeto
+As palavras e suas dicas foram extraídas para o módulo `words.py`.
 
-Ajuste conforme a estrutura real do seu repositório.
+- Local: `words.py` no diretório raiz do repositório.
+- Formato: a variável `PALAVRAS` é uma lista de tuplas `("palavra", "dica")` em letras minúsculas.
+- Para adicionar/editar palavras, abra e edite `words.py` diretamente.
 
-## Customização
+Se preferir usar um arquivo de texto externo, você pode criar um `words.txt` no formato `palavra:dica` por linha (ou apenas `palavra` sem dica). Para carregar `words.txt` automaticamente, substitua a função `sortear_palavra()` em `words.py` por uma versão que leia o arquivo — por exemplo:
 
-- Adicione um arquivo `words.txt` ou similar com a lista de palavras a serem usadas.
-- Ajuste as regras (número de tentativas, dica, categorias) no código.
-- Adicione suporte a múltiplos jogadores, placar, e salvamento de partidas.
+```python
+# carregar words.txt no formato palavra:dica
+
+def carregar_palavras(caminho="words.txt"):
+    pares = []
+    try:
+        with open(caminho, "r", encoding="utf-8") as f:
+            for linha in f:
+                linha = linha.strip()
+                if not linha or linha.startswith("#"):
+                    continue
+                if ":" in linha:
+                    p, d = linha.split(":", 1)
+                    pares.append((p.strip().lower(), d.strip()))
+                else:
+                    pares.append((linha.strip().lower(), ""))
+    except FileNotFoundError:
+        pass
+    return pares
+
+# Exemplo de uso em sortear_palavra():
+# palavras = carregar_palavras()
+# if palavras:
+#     return random.choice(palavras)
+# return random.choice(PALAVRAS)  # fallback
+```
+
+## Estrutura do repositório
+
+- Jogo_da_Forca.py — código-fonte principal (interface Tkinter e lógica do jogo)
+- words.py — lista de palavras/dicas e função de sorteio
+- README.md — este arquivo
+
+## Como personalizar
+
+- Lista de palavras/dicas: a base está em `words.py` (uma lista de tuplas `("palavra", "dica")`). Para adicionar ou alterar palavras, edite essa lista ou use um `words.txt` externo e adapte `words.py` como mostrado acima.
+
+- Mudar número de tentativas: altere `self.max_erros` dentro da classe `JogoForcaGUI` (valor padrão: 6).
+
+- Traduzir/alterar textos: procure strings no topo do arquivo `Jogo_da_Forca.py` e substitua conforme desejar.
+
+## Observações e solução de problemas
+
+- Erro "_tkinter: cannot open display" em sistemas headless: a interface gráfica precisa de um servidor X ou similar; em servidores remotos use forwarding X ou execute localmente.
+- Se o Tkinter não for encontrado no Windows/Linux, instale o pacote do sistema (`python3-tk`) ou verifique a instalação do Python.
 
 ## Como contribuir
 
-1. Fork o repositório.
-2. Crie uma branch: `git checkout -b feature/nome-da-funcionalidade`.
-3. Faça commits claros e com mensagens descritivas.
-4. Abra um Pull Request descrevendo as mudanças.
+1. Faça um fork do repositório.
+2. Crie uma branch com sua feature: `git checkout -b feature/nome-da-feature`.
+3. Faça commits claros e abra um Pull Request.
+
+Dicas de contribuição:
+- Adicione uma opção para carregar palavras de um arquivo ou API.
+- Separe a lógica do jogo da interface para facilitar testes unitários.
 
 ## Licença
 
-Escolha uma licença (por exemplo, MIT) e adicione o arquivo LICENSE ao repositório.
+Sugestão: MIT. Para adicionar: crie um arquivo `LICENSE` com o texto da licença MIT e adicione o cabeçalho apropriado nos arquivos, se desejar.
 
 ## Contato
 
-Se precisar de ajuda para adaptar este README ao código existente, diga qual linguagem/estrutura você usou (por exemplo: Python, JavaScript/HTML, Java) e eu atualizo o README com instruções específicas.
+Se quiser, eu posso:
+- Gerar um `words.txt` com palavras de exemplo;
+- Extrair a lista `PALAVRAS` para um arquivo externo e atualizar o código automaticamente;
+- Adicionar testes unitários e separar a lógica da interface.
+
+Diga qual dessas opções prefere que eu implemente e eu faço as alterações neste repositório e confirmo o commit com instruções de uso.
