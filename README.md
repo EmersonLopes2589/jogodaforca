@@ -1,125 +1,238 @@
-# Jogo da Forca
+# 🎮 Jogo da Forca
 
-Implementação em Python (GUI com Tkinter) do clássico jogo da forca. Este repositório contém o arquivo principal `Jogo_da_Forca.py` que abre uma interface gráfica completa para jogar.
+Implementação em Python com GUI em Tkinter do clássico jogo da forca com **duas versões distintas**.
 
-## Sobre
+---
 
-O jogo seleciona uma palavra secreta (com dica) e o jogador tenta adivinhar letra a letra. A interface usa Tkinter e mostra a forca desenhada, botões com as letras, contagem de erros e telas de vitória/derrota.
+## 📋 Versões Disponíveis
 
-## Requisitos
+### 1️⃣ **Jogo_da_Forca.py** — Versão Clássica
+Uma versão limpa e objetiva do jogo da forca com interface simples e direta.
 
-- Python 3.8+ (testado com 3.8/3.10/3.11)
-- Tkinter (vem com a maioria das instalações do Python, em distribuições Linux pode ser necessário instalar o pacote do sistema `python3-tk`)
-- Git (opcional, para clonar o repositório)
+**Características:**
+- Interface gráfica com Tkinter
+- 26 botões interativos (letras A–Z)
+- Desenho da forca progressivo (6 etapas de erros)
+- Exibição de dica da palavra
+- Contador de erros e letras tentadas
+- Tela de vitória com trofeu animado e fogos
+- Tela de derrota com caveira ASCII art
+- Botão "Novo Jogo" para reiniciar
 
-Observação: não há dependências externas em pip para esta versão — tudo roda com a biblioteca padrão.
-
-## Instalação
-
-1. Clone o repositório:
-
-   git clone https://github.com/EmersonLopes2589/jogodaforca.git
-   cd jogodaforca
-
-2. (Opcional) Crie um ambiente virtual:
-
-   python3 -m venv env
-   source env/bin/activate    # macOS / Linux
-   .\env\Scripts\activate   # Windows PowerShell
-
-3. No Linux (se necessário), instale o Tkinter do sistema:
-
-   # Debian / Ubuntu
-   sudo apt update && sudo apt install python3-tk
-
-4. Execute o jogo:
-
-   python3 Jogo_da_Forca.py
-
-No Windows normalmente basta executar `python Jogo_da_Forca.py` em um terminal.
-
-## Como jogar
-
-- A janela principal mostra a forca, dica e os botões com as letras (A–Z).
-- Clique nas letras para chutar — letras corretas aparecem na palavra; letras incorretas aumentam o contador de erros.
-- Você tem 6 tentativas por padrão (variável `max_erros` no código).
-- Ao vencer, surge uma janela de vitória com animação; ao perder, surge a janela de derrota mostrando a palavra.
-
-## Palavras e dicas (words.py)
-
-As palavras e suas dicas foram extraídas para o módulo `words.py`.
-
-- Local: `words.py` no diretório raiz do repositório.
-- Formato: a variável `PALAVRAS` é uma lista de tuplas `("palavra", "dica")` em letras minúsculas.
-- Para adicionar/editar palavras, abra e edite `words.py` diretamente.
-
-Se preferir usar um arquivo de texto externo, você pode criar um `words.txt` no formato `palavra:dica` por linha (ou apenas `palavra` sem dica). Para carregar `words.txt` automaticamente, substitua a função `sortear_palavra()` em `words.py` por uma versão que leia o arquivo — por exemplo:
-
-```python
-# carregar words.txt no formato palavra:dica
-
-def carregar_palavras(caminho="words.txt"):
-    pares = []
-    try:
-        with open(caminho, "r", encoding="utf-8") as f:
-            for linha in f:
-                linha = linha.strip()
-                if not linha or linha.startswith("#"):
-                    continue
-                if ":" in linha:
-                    p, d = linha.split(":", 1)
-                    pares.append((p.strip().lower(), d.strip()))
-                else:
-                    pares.append((linha.strip().lower(), ""))
-    except FileNotFoundError:
-        pass
-    return pares
-
-# Exemplo de uso em sortear_palavra():
-# palavras = carregar_palavras()
-# if palavras:
-#     return random.choice(palavras)
-# return random.choice(PALAVRAS)  # fallback
+**Para executar:**
+```bash
+python3 Jogo_da_Forca.py
 ```
 
-## Estrutura do repositório
+---
 
-- Jogo_da_Forca.py — código-fonte principal (interface Tkinter e lógica do jogo)
-- words.py — lista de palavras/dicas e função de sorteio
-- README.md — este arquivo
+### 2️⃣ **Jogo_da_Forca_Deluxe.py** — Versão Premium
+Uma versão elaborada com recursos avançados, sistema de pontuação e múltiplos níveis.
 
-## Como personalizar
+**Características (Deluxe):**
+- ✨ **Sistema de pontuação** com bônus por sequência e acertos
+- 🎯 **3 níveis de dificuldade**: Fácil, Médio e Difícil
+- 📂 **6 categorias de palavras**: Frutas, Animais, Países, Esportes, Tecnologia, Profissões
+- 🎨 **Efeitos visuais avançados**:
+  - Botões com efeito hover
+  - Flash de tela (verde/vermelho) ao acertar/errar
+  - Barra de progresso de erros
+  - Forca com detalhes gráficos e sombra
+  - Boneco com rosto expressivo (olhos, boca que mudam com erros)
+- 📊 **Painel de estatísticas** (vitórias, derrotas, sequência, pontos)
+- 🎊 **Confete animado** na vitória
+- 🏴 **Caveira desenhada** na derrota (em vez de ASCII art)
+- 💡 **Botão "Pedir Dica"** (custa 5 pontos)
+- 🚫 **Botão "Desistir"** com confirmação
+- 📜 **Histórico de palavras jogadas**
+- 🎯 **Seleção de categoria e dificuldade** em tempo real
 
-- Lista de palavras/dicas: a base está em `words.py` (uma lista de tuplas `("palavra", "dica")`). Para adicionar ou alterar palavras, edite essa lista ou use um `words.txt` externo e adapte `words.py` como mostrado acima.
+**Para executar:**
+```bash
+python3 Jogo_da_Forca_Deluxe.py
+```
 
-- Mudar número de tentativas: altere `self.max_erros` dentro da classe `JogoForcaGUI` (valor padrão: 6).
+---
 
-- Traduzir/alterar textos: procure strings no topo do arquivo `Jogo_da_Forca.py` e substitua conforme desejar.
+## 📋 Comparação Rápida
 
-## Observações e solução de problemas
+| Recurso | Clássica | Deluxe |
+|---------|----------|--------|
+| Interface básica | ✅ | ✅ |
+| Sistema de pontuação | ❌ | ✅ |
+| Níveis de dificuldade | ❌ | ✅ |
+| Categorias | ❌ | ✅ (6) |
+| Efeitos visuais | 🔹 Básicos | 🔸 Avançados |
+| Estatísticas | ❌ | ✅ |
+| Confete animado | ❌ | ✅ |
+| Pedir dica | ❌ | ✅ |
+| Desistir | ❌ | ✅ |
 
-- Erro "_tkinter: cannot open display" em sistemas headless: a interface gráfica precisa de um servidor X ou similar; em servidores remotos use forwarding X ou execute localmente.
-- Se o Tkinter não for encontrado no Windows/Linux, instale o pacote do sistema (`python3-tk`) ou verifique a instalação do Python.
+---
 
-## Como contribuir
+## 🔧 Requisitos
 
-1. Faça um fork do repositório.
-2. Crie uma branch com sua feature: `git checkout -b feature/nome-da-feature`.
-3. Faça commits claros e abra um Pull Request.
+- **Python 3.8+** (testado com 3.8, 3.10, 3.11)
+- **Tkinter** (vem com a maioria das instalações do Python)
+  - No Linux (Debian/Ubuntu): `sudo apt install python3-tk`
+- **Git** (opcional, para clonar o repositório)
 
-Dicas de contribuição:
-- Adicione uma opção para carregar palavras de um arquivo ou API.
-- Separe a lógica do jogo da interface para facilitar testes unitários.
+⚠️ **Nota:** Não há dependências externas em pip — ambas as versões usam apenas a biblioteca padrão.
 
-## Licença
+---
 
-Sugestão: MIT. Para adicionar: crie um arquivo `LICENSE` com o texto da licença MIT e adicione o cabeçalho apropriado nos arquivos, se desejar.
+## 📥 Instalação
 
-## Contato
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/EmersonLopes2589/jogodaforca.git
+   cd jogodaforca
+   ```
 
-Se quiser, eu posso:
-- Gerar um `words.txt` com palavras de exemplo;
-- Extrair a lista `PALAVRAS` para um arquivo externo e atualizar o código automaticamente;
-- Adicionar testes unitários e separar a lógica da interface.
+2. (Opcional) Crie um ambiente virtual:
+   ```bash
+   python3 -m venv env
+   source env/bin/activate          # macOS / Linux
+   .\env\Scripts\activate           # Windows
+   ```
 
-Diga qual dessas opções prefere que eu implemente e eu faço as alterações neste repositório e confirmo o commit com instruções de uso.
+3. No Linux, se necessário, instale Tkinter do sistema:
+   ```bash
+   # Debian / Ubuntu
+   sudo apt update && sudo apt install python3-tk
+   ```
+
+4. Execute a versão desejada:
+   ```bash
+   # Versão clássica
+   python3 Jogo_da_Forca.py
+   
+   # Versão Deluxe
+   python3 Jogo_da_Forca_Deluxe.py
+   ```
+
+No Windows, normalmente basta executar `python Jogo_da_Forca.py` ou `python Jogo_da_Forca_Deluxe.py` em um terminal.
+
+---
+
+## 🎮 Como Jogar
+
+### Versão Clássica
+- Clique nas letras (A–Z) para chutar
+- Letras corretas aparecem na palavra
+- Letras incorretas aumentam o contador de erros
+- Você tem **6 tentativas** por padrão
+- Ganhe revelando toda a palavra ou perca com 6 erros
+
+### Versão Deluxe
+- Selecione uma **categoria** e **dificuldade** antes de começar
+- Clique nas letras (A–Z) para chutar
+- **Ganhe pontos** por acertos, bônus de sequência e redução de erros
+- Use o botão **"Pedir Dica"** por 5 pontos (se tiver pontos disponíveis)
+- Use o botão **"Desistir"** para abandonar a rodada
+- Acompanhe suas **estatísticas** no painel superior
+- Mude a dificuldade/categoria a qualquer momento para novo jogo
+
+---
+
+## 📁 Estrutura do Repositório
+
+```
+jogodaforca/
+├── Jogo_da_Forca.py              # Versão clássica
+├── Jogo_da_Forca_Deluxe.py       # Versão premium com recursos avançados
+├── words.py                       # Lista de palavras e dicas (usado pela versão clássica)
+├── words.txt                      # Palavras em formato texto (opcional)
+└── README.md                      # Este arquivo
+```
+
+---
+
+## 🎨 Personalizando
+
+### Versão Clássica
+
+- **Adicionar palavras:** Edite o arquivo `words.py` — é uma lista de tuplas `("palavra", "dica")`
+- **Mudar número de tentativas:** Altere `self.max_erros` dentro da classe `JogoForcaGUI` (padrão: 6)
+- **Traduzir/alterar textos:** Procure strings no arquivo `Jogo_da_Forca.py` e substitua conforme desejar
+- **Usar arquivo externo:** Implemente a função `carregar_palavras()` para ler de `words.txt`
+
+### Versão Deluxe
+
+- **Adicionar palavras:** Edite o dicionário `PALAVRAS` dentro do arquivo `Jogo_da_Forca_Deluxe.py`
+  - Estrutura: `PALAVRAS["Categoria"]["dificuldade"] = ["palavra1", "palavra2", ...]`
+- **Adicionar dicas:** Edite o dicionário `DICAS` (chave: palavra, valor: dica)
+- **Criar nova categoria:** Adicione uma chave em `PALAVRAS` com palavras por dificuldade
+- **Ajustar sistema de pontuação:** Modifique os valores em `pontos_base` dentro de `verificar_fim_jogo()`
+- **Alterar paleta de cores:** Procure as constantes `COR_*` no topo do arquivo
+
+---
+
+## 🐛 Solução de Problemas
+
+### "Erro: _tkinter: cannot open display"
+A interface gráfica precisa de um servidor X ou similar. Em servidores remotos, use SSH com forwarding X ou execute localmente.
+
+### "Tkinter não encontrado"
+No Windows ou Linux, instale o pacote do sistema:
+```bash
+# Windows: Reinstale Python e marque a opção "tcl/tk and IDLE"
+
+# Linux (Debian/Ubuntu)
+sudo apt install python3-tk
+
+# Linux (Fedora/RedHat)
+sudo dnf install python3-tkinter
+
+# macOS
+brew install python-tk
+```
+
+### "Erro ao carregar a palavra"
+Verifique se os arquivos `words.py` (clássica) ou o dicionário `PALAVRAS` (Deluxe) estão presentes e bem formatados.
+
+---
+
+## 💡 Ideias para Contribuição
+
+- Adicionar som (com biblioteca como `pygame`)
+- Implementar multiplayer ou ranking online
+- Adicionar temas (modo claro/escuro)
+- Separar lógica do jogo da interface (facilita testes)
+- Criar testes unitários
+- Exportar/importar palavras de APIs
+- Adicionar modo "contra o tempo"
+
+---
+
+## 🤝 Como Contribuir
+
+1. Faça um **fork** do repositório
+2. Crie uma **branch** com sua feature: `git checkout -b feature/nome-da-feature`
+3. Faça **commits** claros: `git commit -m "Adiciona suporte a temas"`
+4. Abra um **Pull Request**
+
+---
+
+## 📜 Licença
+
+**MIT License** — Você é livre para usar, modificar e distribuir este código.
+
+Para adicionar formalmente: crie um arquivo `LICENSE` com o texto da licença MIT.
+
+---
+
+## 📧 Contato & Suporte
+
+Dúvidas ou sugestões? Abra uma **issue** no repositório ou entre em contato.
+
+Algumas melhorias já planejadas:
+- ✨ Sistema de rankings persistente
+- 🎵 Efeitos sonoros
+- 🌐 Modo online/multiplayer
+- 📱 Versão mobile
+- 🧪 Suite completa de testes
+
+---
+
+**Bom jogo!** 🎮🎉
